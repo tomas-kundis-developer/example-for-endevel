@@ -3,6 +3,10 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
+    colors: {
+      'slider-btn-primary': '#fafafa',
+      'slider-btn-secondary': '#3b82f6',
+    },
     container: {
       // center container class by default
       // (you don't have to use class="container mx-auto", but just class="container")
