@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center">
+  <div class="py-4 flex flex-col justify-center">
     <div class="flex flex-col items-center pt-3">
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
       <div class="pt-2">Welcome in Vue application!</div>
@@ -20,8 +20,10 @@
     </div>
     <div class="mt-10">
       <nav class="flex flex-col items-center">
-        <div><RouterLink to="/">Home</RouterLink></div>
-        <div><a href="https://vuejs.org/" target="_blank">Vue.js Homepage</a></div>
+        <div class="font-semibold text-brand-link"><RouterLink to="/">Home</RouterLink></div>
+        <div class="mt-1.5 font-semibold text-brand-link">
+          <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue.js Homepage</a>
+        </div>
       </nav>
     </div>
   </div>
