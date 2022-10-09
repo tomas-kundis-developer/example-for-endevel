@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <WelcomeScreen />
-  </div>
+  <WelcomeScreen />
 </template>
 
 <script setup lang="ts">
