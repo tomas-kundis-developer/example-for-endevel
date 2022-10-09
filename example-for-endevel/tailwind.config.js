@@ -4,6 +4,11 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     colors: {
+      brand: {
+        'component-bg': '#ffffff',
+        'layout-bg': '#eaeef2',
+        'link': '#00bd7e',
+      },
       'slider-btn-primary': '#fafafa',
       'slider-btn-secondary': '#3b82f6',
     },
