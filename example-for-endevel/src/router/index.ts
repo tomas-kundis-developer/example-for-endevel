@@ -19,4 +19,8 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to, from) => {
+  // TODO 2022-10-09 TOKU: Add router's beforeEach global guard.
+});
+
 export default router;
