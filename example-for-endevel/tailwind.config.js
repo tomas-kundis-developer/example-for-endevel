@@ -7,10 +7,12 @@ module.exports = {
       brand: {
         'component-bg': '#ffffff',
         'layout-bg': '#eaeef2',
-        'link': '#00bd7e',
+        green: '#00bd7e',
+        link: '#00bd7e',
       },
       'slider-btn-primary': '#fafafa',
       'slider-btn-secondary': '#3b82f6',
+      white: '#ffffff',
     },
     container: {
       // center container class by default
