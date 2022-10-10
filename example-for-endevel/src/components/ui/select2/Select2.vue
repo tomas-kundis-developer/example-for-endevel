@@ -9,6 +9,7 @@
         :options="props.options"
         :placeholder="props.placeholder"
         @change="onChange"
+        :canClear="props.canClear"
       />
     </div>
   </div>
@@ -27,6 +28,7 @@ const props = defineProps<{
   noOptionsText?: string;
   options: ISelectOption2[];
   placeholder?: string;
+  canClear?: boolean;
 }>();
 
 const emit = defineEmits(['update:modelValue']);
