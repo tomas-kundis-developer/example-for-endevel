@@ -1,5 +1,5 @@
 <template>
-  <div class="py-4 flex flex-col justify-center">
+  <div class="pt-4 pb-10 flex flex-col justify-center">
     <!-- Header with a logo -->
 
     <div class="flex flex-col items-center pt-3">
@@ -37,20 +37,6 @@
     </div>
     <div class="mt-5">
       <Slider :initialValue="10" :min="5" :max="15" />
-    </div>
-
-    <!-- Footer -->
-
-    <div class="mt-10">
-      <hr class="h-px border-0 bg-brand-green" />
-    </div>
-    <div class="mt-2.5">
-      <nav class="flex flex-col items-center">
-        <div class="font-semibold text-brand-link"><RouterLink to="/">Home</RouterLink></div>
-        <div class="mt-1.5 font-semibold text-brand-link">
-          <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue.js Homepage</a>
-        </div>
-      </nav>
     </div>
   </div>
 </template>
