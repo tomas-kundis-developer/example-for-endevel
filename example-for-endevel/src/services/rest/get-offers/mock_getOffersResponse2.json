@@ -1,0 +1,148 @@
+{
+  "mortgageInsuredOffers": [
+    {
+      "idOffer": 0,
+      "bankName": "Československá obchodní banka",
+      "productName": "Developerský projekt Srovnejto",
+      "interestRate": 6.49,
+      "monthlyPayment": 22350,
+      "riskInsurance": 1249,
+      "totalFixationCosts": 207462,
+      "apr": 7.44
+    },
+    {
+      "idOffer": 0,
+      "bankName": "mBank",
+      "productName": "mHypotéka na bydlení",
+      "interestRate": 10.64,
+      "monthlyPayment": 30234,
+      "riskInsurance": 3750,
+      "totalFixationCosts": 365809,
+      "apr": 13.22
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Komerční banka",
+      "productName": "Developerské projekty, individuální podmínky",
+      "interestRate": 7.84,
+      "monthlyPayment": 24838,
+      "riskInsurance": 750,
+      "totalFixationCosts": 246780,
+      "apr": 8.62
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Česká spořitelna",
+      "productName": "Standardní hypotéka",
+      "interestRate": 7.04,
+      "monthlyPayment": 23517,
+      "riskInsurance": 1999,
+      "totalFixationCosts": 240247,
+      "apr": 8.58
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Raiffeisenbank",
+      "productName": "Hypotéka Klasik (odhad zdarma)",
+      "interestRate": 7.29,
+      "monthlyPayment": 23784,
+      "riskInsurance": 2022,
+      "totalFixationCosts": 240689,
+      "apr": 7.55
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Moneta Money Bank",
+      "productName": "Pružná hypotéka",
+      "interestRate": 6.99,
+      "monthlyPayment": 23241,
+      "riskInsurance": 2089,
+      "totalFixationCosts": 235508,
+      "apr": 8.46
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Hypoteční banka",
+      "productName": "Developerský projekt Srovnejto",
+      "interestRate": 6.49,
+      "monthlyPayment": 22350,
+      "riskInsurance": 1249,
+      "totalFixationCosts": 207462,
+      "apr": 7.44
+    }
+  ],
+  "mortgageUninsuredOffers": [
+    {
+      "idOffer": 0,
+      "bankName": "Československá obchodní banka",
+      "productName": "Developerský projekt Srovnejto",
+      "interestRate": 6.69,
+      "monthlyPayment": 22704,
+      "riskInsurance": 0,
+      "totalFixationCosts": 198459,
+      "apr": 6.91
+    },
+    {
+      "idOffer": 0,
+      "bankName": "mBank",
+      "productName": "mHypotéka na bydlení",
+      "interestRate": 10.64,
+      "monthlyPayment": 30234,
+      "riskInsurance": 0,
+      "totalFixationCosts": 320809,
+      "apr": 11.21
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Komerční banka",
+      "productName": "Developerské projekty, individuální podmínky",
+      "interestRate": 7.84,
+      "monthlyPayment": 24838,
+      "riskInsurance": 0,
+      "totalFixationCosts": 237780,
+      "apr": 8.19
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Česká spořitelna",
+      "productName": "Standardní hypotéka",
+      "interestRate": 7.14,
+      "monthlyPayment": 23701,
+      "riskInsurance": 0,
+      "totalFixationCosts": 219296,
+      "apr": 7.52
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Raiffeisenbank",
+      "productName": "Hypotéka Klasik (odhad zdarma)",
+      "interestRate": 7.29,
+      "monthlyPayment": 23784,
+      "riskInsurance": 0,
+      "totalFixationCosts": 216425,
+      "apr": 7.55
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Moneta Money Bank",
+      "productName": "Pružná hypotéka",
+      "interestRate": 7.19,
+      "monthlyPayment": 23602,
+      "riskInsurance": 0,
+      "totalFixationCosts": 216430,
+      "apr": 7.46
+    },
+    {
+      "idOffer": 0,
+      "bankName": "Hypoteční banka",
+      "productName": "Developerský projekt Srovnejto",
+      "interestRate": 6.69,
+      "monthlyPayment": 22704,
+      "riskInsurance": 0,
+      "totalFixationCosts": 198459,
+      "apr": 6.91
+    }
+  ],
+  "gepardErrorMessageInsuredOffers": null,
+  "gepardErrorMessageUninsuredOffers": null
+}
