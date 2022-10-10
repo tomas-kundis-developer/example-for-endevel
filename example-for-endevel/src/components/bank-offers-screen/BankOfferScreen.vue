@@ -3,6 +3,7 @@
     <div class="flex justify-center mt-1 mb-3 text-2xl font-semibold">Search your individual loan.</div>
 
     <!-- Filter -->
+
     <div class="p-5 rounded-xl bg-brand-link bg-opacity-20">
       <div class="flex flex-col">
         <div class="flex justify-center text-xl font-semibold">Search parameters</div>
@@ -34,8 +35,12 @@
     </div>
 
     <!-- Bank Offers -->
-    <div class="flex justify-center mt-5 text-xl font-semibold">Search results</div>
-    <div class="mt-5 px-2 py-1 border-2 rounded-xl">... here comes the bank offers ...</div>
+
+    <h1 class="flex justify-center mt-5">Search results</h1>
+    <h2 class="flex justify-center mt-5">Offers without insurance</h2>
+    <OfferItem v-for="(offer, index) in uninsuredOffers" :key="index" :offer="offer" />
+    <h2 class="flex justify-center mt-5">Offers with an insurance</h2>
+    <OfferItem v-for="(offer, index) in insuredOffers" :key="index" :offer="offer" />
   </div>
 </template>
 
@@ -43,6 +48,11 @@
 // Vue
 
 import { reactive } from 'vue';
+
+// services, utils
+
+import type { IOfferResponse } from '@/services/rest/get-offers/IGetOffersResponse';
+import { getOffersService } from '@/services/rest/get-offers/getOffersService';
 
 // UI components
 
@@ -54,6 +64,7 @@ import Slider from '@/components/ui/Slider.vue';
 
 import { fixationSelectOptions } from './fixationSelectOptions';
 import { bankSelectOptionsFactory, ALL_BANKS_SELECT_VALUE } from './services/bankSelectOptionsFactory';
+import OfferItem from './OfferItem.vue';
 
 const state = reactive({
   selectedBank: '',
@@ -67,6 +78,18 @@ const LOAN_TERM_MIN = 5;
 const LOAN_TERM_MAX = 30;
 
 const bankSelectOptions: ISelectOption2[] = bankSelectOptionsFactory();
+
+const offers = getOffersService();
+const insuredOffers: IOfferResponse[] = offers.mortgageInsuredOffers;
+const uninsuredOffers: IOfferResponse[] = offers.mortgageUninsuredOffers;
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+h1 {
+  @apply text-xl font-semibold;
+}
+
+h2 {
+  @apply text-lg font-semibold;
+}
+</style>
