@@ -12,6 +12,10 @@ module.exports = {
       },
       'slider-btn-primary': '#fafafa',
       'slider-btn-secondary': '#3b82f6',
+      gray: {
+        DEFAULT: '#828282',
+        light: '#f7f7f7',
+      },
       white: '#ffffff',
     },
     container: {
