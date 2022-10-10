@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-5">
+  <div class="pb-8">
     <div class="flex justify-center mt-1 mb-3 text-2xl font-semibold">Search your individual loan.</div>
 
     <!-- Filter -->
