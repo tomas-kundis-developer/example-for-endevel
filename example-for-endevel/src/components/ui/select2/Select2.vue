@@ -31,12 +31,13 @@ const props = defineProps<{
   canClear?: boolean;
 }>();
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['change', 'update:modelValue']);
 
 const formValue = ref(props.defaultValue ?? '');
 
 const onChange = (value: string) => {
   emit('update:modelValue', value);
+  emit('change', value);
 };
 </script>
 
