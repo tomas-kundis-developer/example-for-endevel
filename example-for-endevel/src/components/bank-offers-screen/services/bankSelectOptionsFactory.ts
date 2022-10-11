@@ -1,4 +1,4 @@
-import { ELoanProviders } from '@/domain-model/LoanProviders';
+import { ELoanProviders } from '@/domain-model/loanProviders';
 import type { ISelectOption2 } from '@/components/ui/select2/ISelectOption2';
 
 export const ALL_BANKS_SELECT_VALUE = 'all';
