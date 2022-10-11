@@ -16,6 +16,7 @@
             :canClear="false"
             :defaultValue="ALL_BANKS_SELECT_VALUE"
             :options="bankSelectOptions"
+            @change="filterChange"
           />
         </div>
         <div class="mt-5 font-semibold">Fixation:</div>
@@ -25,11 +26,17 @@
             :canClear="false"
             :defaultValue="DEFAULT_FIXATION"
             :options="fixationSelectOptions"
+            @change="filterChange"
           />
         </div>
         <div class="mt-5 font-semibold">Loan Term:</div>
         <div class="mt-1 mb-10">
-          <Slider :initialValue="DEFAULT_LOAN_TERM" :min="LOAN_TERM_MIN" :max="LOAN_TERM_MAX" />
+          <Slider
+            :initialValue="DEFAULT_LOAN_TERM"
+            :min="LOAN_TERM_MIN"
+            :max="LOAN_TERM_MAX"
+            @changedValue="filterChange"
+          />
         </div>
       </div>
     </div>
@@ -47,11 +54,19 @@
 <script setup lang="ts">
 // Vue
 
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
+import type { ComputedRef } from 'vue';
+
+// interfaces, types
+
+import type { IOfferResponse } from '@/@types/integration/be-api/IGetOffersResponse';
+
+// Composables
+
+import { useApiResponses } from '@/store/composables/useApiResponses';
 
 // services, utils
 
-import type { IOfferResponse } from '@/services/rest/get-offers/IGetOffersResponse';
 import { getOffersService } from '@/services/rest/get-offers/getOffersService';
 
 // UI components
@@ -69,6 +84,7 @@ import OfferItem from './OfferItem.vue';
 const state = reactive({
   selectedBank: '',
   selectedFixation: '',
+  selectedLoanTerm: null,
 });
 
 const DEFAULT_FIXATION = '3';
@@ -79,9 +95,27 @@ const LOAN_TERM_MAX = 30;
 
 const bankSelectOptions: ISelectOption2[] = bankSelectOptionsFactory();
 
-const offers = getOffersService();
-const insuredOffers: IOfferResponse[] = offers.mortgageInsuredOffers;
-const uninsuredOffers: IOfferResponse[] = offers.mortgageUninsuredOffers;
+const { getOffersResponse: offers } = useApiResponses();
+
+const insuredOffers: ComputedRef<IOfferResponse[]> = computed(() => {
+  return offers?.mortgageInsuredOffers ?? [];
+});
+
+const uninsuredOffers: ComputedRef<IOfferResponse[]> = computed(() => {
+  return offers?.mortgageUninsuredOffers ?? [];
+});
+
+// TODO 2022-10-11 TOKU: CONTINUE HERE - EXTRACT AS COMPLEX FILTER PIPELINE.
+// TODO 2022-10-11 TOKU: CONTINUE HERE - Add v-model also for Slider?.
+const filterChange = (value: string) => {
+  console.log(`BankOfferScreen: onBankSelected(): value: ${value}`);
+  console.log(`BankOfferScreen: state:`);
+  console.log(state);
+  // just a scratch, improve!
+  offers.mortgageUninsuredOffers = offers?.mortgageUninsuredOffers.filter(
+    (offer) => offer.bankName === 'Česká spořitelna',
+  ) ?? [];
+};
 </script>
 
 <style lang="scss" scoped>
