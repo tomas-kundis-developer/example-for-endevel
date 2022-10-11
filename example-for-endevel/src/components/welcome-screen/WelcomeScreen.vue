@@ -42,14 +42,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { RouterLink, useRouter } from 'vue-router';
+// Vue
 
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+// services, utils
+
+import { store } from '@/store/store';
+import { getOffersService } from '@/services/rest/get-offers/getOffersService';
+
+// UI components
+
+import type { ISelectOption } from '@/components/ui/select/ISelectOption';
+import type { ISelectOption2 } from '@/components/ui/select2/ISelectOption2';
 import Select from '@/components/ui/select/Select.vue';
 import Select2 from '@/components/ui/select2/Select2.vue';
 import Slider from '@/components/ui/Slider.vue';
-import type { ISelectOption } from '@/components/ui/select/ISelectOption';
-import type { ISelectOption2 } from '@/components/ui/select2/ISelectOption2';
 
 const router = useRouter();
 
@@ -69,6 +78,8 @@ const selectedCar = ref('');
 const selectedCar2 = ref('');
 
 const onBankOffers = () => {
+  // TODO 2022-10-11 TOKU: Make async call getOffersService() for better demonstration of JS skills.
+  store.apiResponses.getOffersResponse = getOffersService();
   router.push({ name: 'bank-offers-view' });
 };
 </script>
