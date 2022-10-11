@@ -1,8 +1,8 @@
 export interface IGetOffersResponse {
   mortgageInsuredOffers: IOfferResponse[];
   mortgageUninsuredOffers: IOfferResponse[];
-  errorMessageInsuredOffers: string | null;
-  errorMessageUninsuredOffers: string | null;
+  errorMessageInsuredOffers?: string | null;
+  errorMessageUninsuredOffers?: string | null;
 }
 
 export interface IOfferResponse {
