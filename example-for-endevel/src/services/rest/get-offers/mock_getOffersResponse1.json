@@ -32,7 +32,7 @@
     },
     {
       "idOffer": 0,
-      "bankName": "Komerční banka",
+      "bankName": "Komerční banka (KB)",
       "productName": "Developerské projekty, individuální podmínky",
       "interestRate": 5.74,
       "monthlyPayment": 24984,
@@ -52,7 +52,7 @@
     },
     {
       "idOffer": 0,
-      "bankName": "Unicredit bank",
+      "bankName": "UniCredit Bank",
       "productName": "U hypotéka",
       "interestRate": 6.09,
       "monthlyPayment": 25462,
@@ -62,7 +62,7 @@
     },
     {
       "idOffer": 0,
-      "bankName": "Moneta Money Bank",
+      "bankName": "MONETA Money Bank",
       "productName": "Pružná hypotéka",
       "interestRate": 6.49,
       "monthlyPayment": 26117,
@@ -114,7 +114,7 @@
     },
     {
       "idOffer": 0,
-      "bankName": "Komerční banka",
+      "bankName": "Komerční banka (KB)",
       "productName": "Developerské projekty, individuální podmínky",
       "interestRate": 5.74,
       "monthlyPayment": 24984,
@@ -134,7 +134,7 @@
     },
     {
       "idOffer": 0,
-      "bankName": "Unicredit bank",
+      "bankName": "UniCredit Bank",
       "productName": "U hypotéka",
       "interestRate": 6.29,
       "monthlyPayment": 25788,
@@ -144,7 +144,7 @@
     },
     {
       "idOffer": 0,
-      "bankName": "Moneta Money Bank",
+      "bankName": "MONETA Money Bank",
       "productName": "Pružná hypotéka",
       "interestRate": 6.69,
       "monthlyPayment": 26448,
