@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IOfferResponse } from '@/services/rest/get-offers/IGetOffersResponse';
+import type { IOfferResponse } from '@/@types/integration/be-api/IGetOffersResponse';
 
 const props = defineProps<{
   offer: IOfferResponse;
