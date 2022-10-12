@@ -18,6 +18,13 @@
         Fetch and show bank offers
       </button>
     </div>
+
+    <div class="flex flex-col mt-5 text-sm text-center italic text-brand-green-light">
+      This is just simple example application as my reference.<br />
+      Its purpose is to present my skill in architecting and developing SPA web application's using the Vue.js
+      framework.
+    </div>
+
     <div class="mt-5">
       <hr class="h-px border-0 bg-brand-green" />
     </div>

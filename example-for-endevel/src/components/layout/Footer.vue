@@ -11,7 +11,7 @@
           <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">vuejs.org</a>
         </div>
       </nav>
-      <div class="text-sm text-right text-gray">Version: {{ appVersion }}</div>
+      <div class="text-sm text-right text-gray opacity-50">Version: {{ appVersion }}</div>
     </div>
   </div>
 </template>
