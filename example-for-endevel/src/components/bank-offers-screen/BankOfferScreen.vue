@@ -81,7 +81,7 @@ import Slider from '@/components/ui/Slider.vue';
 // This component
 
 import { DEFAULT_FIXATION, DEFAULT_LOAN_TERM, LOAN_TERM_MIN, LOAN_TERM_MAX } from './config';
-import { fixationSelectOptions } from './fixationSelectOptions';
+import { fixationSelectOptions } from './config';
 import { bankSelectOptionsFactory, ALL_BANKS_SELECT_VALUE } from './services/bankSelectOptionsFactory';
 import OfferItem from './OfferItem.vue';
 
