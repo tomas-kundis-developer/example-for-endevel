@@ -22,60 +22,55 @@
       <hr class="h-px border-0 bg-brand-green" />
     </div>
 
-    <!-- UI Form's component playground -->
+    <!-- Other -->
 
-    <div class="mt-5">
-      <div>Selected car: {{ selectedCar }}</div>
-      <Select v-model="selectedCar" :options="cars" defaultValue="volvo" />
-      <Select v-model="selectedCar" :options="cars" placeholder="Select a car" />
-    </div>
-    <div class="mt-5">
-      <div>Selected car 2: {{ selectedCar2 }}</div>
-      <Select2 v-model="selectedCar2" :options="cars2" placeholder="Select a car" />
-      <Select2 v-model="selectedCar2" :options="cars2" defaultValue="volvo" />
-      <Select2 v-model="selectedCar2" :options="cars2" defaultValue="volvo" disabled />
-    </div>
-    <div class="mt-5">
-      <Slider :initialValue="10" :min="5" :max="15" />
-    </div>
+    <div class="pt-10">Other:</div>
+    <ul class="ml-10 list-disc">
+      <li class="text-brand-link">
+        <a :href="GIT_HUB_URL_MASTER" target="_blank" rel="noopener noreferrer">Project's Github</a>
+      </li>
+      <li class="text-brand-link">
+        <a :href="GIT_HUB_URL_DEV" target="_blank" rel="noopener noreferrer">Project's Github - Dev branch</a>
+        <ul class="ml-10 list-disc font-medium">
+          <li>
+            <a :href="GIT_HUB_URL_DEV_WELCOME_SCREEN" target="_blank" rel="noopener noreferrer"
+              >WelcomeScreen Component</a
+            >
+          </li>
+          <li>
+            <a :href="GIT_HUB_URL_DEV_BANK_OFFERS_SCREEN" target="_blank" rel="noopener noreferrer"
+              >BankOffersScreen Component</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="text-brand-link">
+        <RouterLink :to="{ name: 'test-playground-view' }">Playground for testing components</RouterLink>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts">
 // Vue
 
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+
+// config
+
+import { envConfig } from '@/config/envConfig';
 
 // services, utils
 
 import { store } from '@/store/store';
 import { getOffersService } from '@/services/rest/get-offers/getOffersService';
 
-// UI components
-
-import type { ISelectOption } from '@/components/ui/select/ISelectOption';
-import type { ISelectOption2 } from '@/components/ui/select2/ISelectOption2';
-import Select from '@/components/ui/select/Select.vue';
-import Select2 from '@/components/ui/select2/Select2.vue';
-import Slider from '@/components/ui/Slider.vue';
-
 const router = useRouter();
 
-const cars: ISelectOption[] = [
-  { description: 'Audi', value: 'audi' },
-  { description: 'BMW', value: 'bmw', disabled: true },
-  { description: 'Volvo', value: 'volvo', disabled: false },
-];
-
-const cars2: ISelectOption2[] = [
-  { label: 'Audi', value: 'audi' },
-  { label: 'BMW', value: 'bmw', disabled: true },
-  { label: 'Volvo', value: 'volvo' },
-];
-
-const selectedCar = ref('');
-const selectedCar2 = ref('');
+const GIT_HUB_URL_MASTER = envConfig.githubUrl;
+const GIT_HUB_URL_DEV = `${envConfig.githubUrl}/tree/dev`;
+const GIT_HUB_URL_DEV_BANK_OFFERS_SCREEN = `${envConfig.githubUrl}/tree/dev/example-for-endevel/src/components/bank-offers-screen`;
+const GIT_HUB_URL_DEV_WELCOME_SCREEN = `${envConfig.githubUrl}/blob/dev/example-for-endevel/src/components/welcome-screen/WelcomeScreen.vue`;
 
 const onBankOffers = () => {
   // TODO 2022-10-11 TOKU: Make async call getOffersService() for better demonstration of JS skills.
