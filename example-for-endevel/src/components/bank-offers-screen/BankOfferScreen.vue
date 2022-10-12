@@ -14,9 +14,9 @@
           <Select2
             v-model="state.selectedBank"
             :canClear="false"
-            :defaultValue="ALL_BANKS_SELECT_VALUE"
+            :defaultValue="initialState.selectedBank"
             :options="bankSelectOptions"
-            @change="filterChange"
+            @change="filter"
           />
         </div>
         <div class="mt-5 font-semibold">Fixation:</div>
@@ -24,18 +24,18 @@
           <Select2
             v-model="state.selectedFixation"
             :canClear="false"
-            :defaultValue="DEFAULT_FIXATION"
+            :defaultValue="initialState.selectedFixation"
             :options="fixationSelectOptions"
-            @change="filterChange"
+            @change="filter"
           />
         </div>
         <div class="mt-5 font-semibold">Loan Term:</div>
         <div class="mt-1 mb-10">
           <Slider
-            :initialValue="DEFAULT_LOAN_TERM"
+            :initialValue="initialState.selectedLoanTerm"
             :min="LOAN_TERM_MIN"
             :max="LOAN_TERM_MAX"
-            @changedValue="filterChange"
+            @changedValue="onLoanTermChange"
           />
         </div>
       </div>
@@ -44,30 +44,33 @@
     <!-- Bank Offers -->
 
     <h1 class="flex justify-center mt-5">Search results</h1>
+
+    <!-- With insurance. -->
     <h2 class="flex justify-center mt-5">Offers without insurance</h2>
-    <OfferItem v-for="(offer, index) in uninsuredOffers" :key="index" :offer="offer" />
+    <OfferItem v-for="(offer, index) in state.filteredOffers.uninsured" :key="index" :offer="offer" />
+
+    <!-- Without insurance. -->
     <h2 class="flex justify-center mt-5">Offers with an insurance</h2>
-    <OfferItem v-for="(offer, index) in insuredOffers" :key="index" :offer="offer" />
+    <OfferItem v-for="(offer, index) in state.filteredOffers.insured" :key="index" :offer="offer" />
   </div>
 </template>
 
 <script setup lang="ts">
 // Vue
 
-import { computed, reactive } from 'vue';
-import type { ComputedRef } from 'vue';
+import { reactive, watch } from 'vue';
 
 // interfaces, types
 
 import type { IOfferResponse } from '@/@types/integration/be-api/IGetOffersResponse';
 
+// services, utils
+
+import { ELoanProviders, getLoanProvider } from '@/domain-model/loanProviders';
+
 // Composables
 
 import { useApiResponses } from '@/store/composables/useApiResponses';
-
-// services, utils
-
-import { getOffersService } from '@/services/rest/get-offers/getOffersService';
 
 // UI components
 
@@ -77,44 +80,82 @@ import Slider from '@/components/ui/Slider.vue';
 
 // This component
 
+import { DEFAULT_FIXATION, DEFAULT_LOAN_TERM, LOAN_TERM_MIN, LOAN_TERM_MAX } from './config';
 import { fixationSelectOptions } from './fixationSelectOptions';
 import { bankSelectOptionsFactory, ALL_BANKS_SELECT_VALUE } from './services/bankSelectOptionsFactory';
 import OfferItem from './OfferItem.vue';
 
+const initialState = {
+  selectedBank: ALL_BANKS_SELECT_VALUE,
+  selectedFixation: DEFAULT_FIXATION,
+  selectedLoanTerm: DEFAULT_LOAN_TERM,
+};
+
 const state = reactive({
-  selectedBank: '',
-  selectedFixation: '',
-  selectedLoanTerm: null,
+  selectedBank: ALL_BANKS_SELECT_VALUE,
+  selectedFixation: DEFAULT_FIXATION,
+  selectedLoanTerm: DEFAULT_LOAN_TERM,
+  filteredOffers: {
+    uninsured: [] as IOfferResponse[],
+    insured: [] as IOfferResponse[],
+  },
 });
-
-const DEFAULT_FIXATION = '3';
-const DEFAULT_LOAN_TERM = 15;
-
-const LOAN_TERM_MIN = 5;
-const LOAN_TERM_MAX = 30;
 
 const bankSelectOptions: ISelectOption2[] = bankSelectOptionsFactory();
 
+// Fetched offers from financial service - original REST response, complete, unfiltered list.
 const { getOffersResponse: offers } = useApiResponses();
 
-const insuredOffers: ComputedRef<IOfferResponse[]> = computed(() => {
-  return offers?.mortgageInsuredOffers ?? [];
+// Set initial view to show all fetched offers without applied filter.
+state.filteredOffers.uninsured = offers?.mortgageInsuredOffers ?? [];
+state.filteredOffers.insured = offers?.mortgageInsuredOffers ?? [];
+
+// Run filter when fetched offers was updated in store (when these was again fetched from a server
+//   during another async. action).
+watch(offers, () => {
+  console.log('BankOfferScree: watch: store changed: getOffersResponse');
+  filter();
 });
 
-const uninsuredOffers: ComputedRef<IOfferResponse[]> = computed(() => {
-  return offers?.mortgageUninsuredOffers ?? [];
-});
+// =====================================================================================================================
+// Functions, Callbacks
+// =====================================================================================================================
 
-// TODO 2022-10-11 TOKU: CONTINUE HERE - EXTRACT AS COMPLEX FILTER PIPELINE.
+const onLoanTermChange = (value: number) => {
+  state.selectedLoanTerm = value;
+  filter();
+};
+
 // TODO 2022-10-11 TOKU: CONTINUE HERE - Add v-model also for Slider?.
-const filterChange = (value: string) => {
-  console.log(`BankOfferScreen: onBankSelected(): value: ${value}`);
-  console.log(`BankOfferScreen: state:`);
-  console.log(state);
-  // just a scratch, improve!
-  offers.mortgageUninsuredOffers = offers?.mortgageUninsuredOffers.filter(
-    (offer) => offer.bankName === 'Česká spořitelna',
-  ) ?? [];
+const filter = () => {
+  console.log(`BankOfferScreen: filter(): state: filter values:`);
+  console.table(state);
+
+  console.log(`BankOfferScreen: filter(): ------------ FILTER 1 - START: Bank name ------------`);
+
+  state.filteredOffers.uninsured =
+    offers?.mortgageUninsuredOffers.filter(
+      (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
+    ) ?? [];
+
+  state.filteredOffers.insured =
+    offers?.mortgageInsuredOffers.filter(
+      (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
+    ) ?? [];
+
+  console.log(`BankOfferScreen: filter(): ------------ FILTER 1 - END ------------`);
+
+  console.log(`BankOfferScreen: filter(): ------------ FILTER 2 - START: Sort ascending by interest rate ------------`);
+
+  state.filteredOffers.uninsured.sort((offer1, offer2) => {
+    return offer1.interestRate <= offer2.interestRate ? -1 : 1;
+  });
+
+  state.filteredOffers.insured.sort((offer1, offer2) => {
+    return offer1.interestRate <= offer2.interestRate ? -1 : 1;
+  });
+
+  console.log(`BankOfferScreen: filter(): ------------ FILTER 2 - END  ------------`);
 };
 </script>
 
