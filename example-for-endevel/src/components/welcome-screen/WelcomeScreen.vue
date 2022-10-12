@@ -53,6 +53,7 @@
 
 <script setup lang="ts">
 // Vue
+import { inject } from 'vue';
 import { useRouter } from 'vue-router';
 
 // config
@@ -66,13 +67,17 @@ import { getOffersServiceAsync } from '@/services/rest/get-offers/getOffersServi
 
 const router = useRouter();
 
+const $loading = inject('$loading');
+
 const GIT_HUB_URL_MASTER = envConfig.githubUrl;
 const GIT_HUB_URL_DEV = `${envConfig.githubUrl}/tree/dev`;
 const GIT_HUB_URL_DEV_BANK_OFFERS_SCREEN = `${envConfig.githubUrl}/tree/dev/example-for-endevel/src/components/bank-offers-screen`;
 const GIT_HUB_URL_DEV_WELCOME_SCREEN = `${envConfig.githubUrl}/blob/dev/example-for-endevel/src/components/welcome-screen/WelcomeScreen.vue`;
 
 const onBankOffers = async () => {
+  const loader = $loading.show();
   store.apiResponses.getOffersResponse = await getOffersServiceAsync();
+  loader.hide();
   await router.push({ name: 'bank-offers-view' });
 };
 </script>
