@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import BankOffersView from '@/views/BankOffersView.vue';
+import TestPlaygroundView from '@/views/TestPlaygroundView.vue';
 import WelcomeView from '@/views/WelcomeView.vue';
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
       path: '/bank-offers/',
       name: 'bank-offers-view',
       component: BankOffersView,
+    },
+    {
+      path: '/test-playground/',
+      name: 'test-playground-view',
+      component: TestPlaygroundView,
     },
   ],
 });
