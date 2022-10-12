@@ -4,7 +4,7 @@
     <div class="mt-4">
       <nav class="flex flex-col items-center">
         <div class="hover:animate-pulse font-semibold text-brand-link"><RouterLink to="/">Home</RouterLink></div>
-        <div class="mt-1 font-semibold text-brand-link text-opacity-40">
+        <div class="mt-1 font-semibold text-brand-link-light">
           <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">vuejs.org</a>
         </div>
       </nav>

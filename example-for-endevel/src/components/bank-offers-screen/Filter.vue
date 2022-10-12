@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-5 rounded-xl bg-brand-link bg-opacity-20">
+    <div class="p-5 rounded-xl bg-brand-green-light2">
       <div class="flex flex-col">
         <div class="flex justify-center text-xl font-semibold">Search parameters</div>
         <div class="mt-5 font-semibold">Loan amount:</div>

@@ -13,7 +13,7 @@
       <button
         type="button"
         @click="onBankOffers"
-        class="px-2 py-1 text-xl font-medium rounded-md border-2 border-brand-link text-white bg-brand-green bg-opacity-80"
+        class="px-2 py-1 text-xl font-medium rounded-md border-2 border-brand-link text-white bg-brand-green-light"
       >
         Fetch and show bank offers
       </button>
