@@ -4,6 +4,7 @@ import type { IGetOffersResponse } from '@/@types/integration/be-api/IGetOffersR
 
 // utils
 
+import { thousandSeparatorUs } from '@/utils/thousandSeparator';
 import { randomGen } from '@/utils/randomGen';
 
 // this component
@@ -16,7 +17,6 @@ export const getOffersService = (): IGetOffersResponse => {
   console.log('getOffersService(): Waiting for server to reply ...');
   console.log('getOffersService(): OK (mocked data)');
 
-  // TODO 2022-10-10 TOKU: Add error state simulation.
   switch (randomGen(1, 2)) {
     case 1:
       return mock_response1;
@@ -33,7 +33,9 @@ export const getOffersServiceAsync = (): Promise<IGetOffersResponse> =>
 
     console.log('getOffersServiceAsync(): Waiting for server to reply (mocked data) ...');
     setTimeout(() => {
-      console.log(`getOffersServiceAsync(): DONE after ${generatedTimeoutMs} ms`);
+      console.log(`getOffersServiceAsync(): ... DONE (after ${thousandSeparatorUs(generatedTimeoutMs)} ms).`);
+
+      // TODO 2022-10-10 TOKU: Add error state simulation.
       switch (randomGen(1, 2)) {
         case 1:
           resolve(mock_response1);
