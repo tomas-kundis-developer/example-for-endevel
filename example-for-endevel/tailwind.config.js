@@ -7,8 +7,15 @@ module.exports = {
       brand: {
         'component-bg': '#ffffff',
         'layout-bg': '#eaeef2',
-        green: '#00bd7e',
-        link: '#00bd7e',
+        green: {
+          DEFAULT: '#00bd7e',
+          light: '#33ca98',
+          light2: '#ccf2e5',
+        },
+        link: {
+          DEFAULT: '#00bd7e',
+          light: '#99e5dc',
+        },
       },
       'slider-btn-primary': '#fafafa',
       'slider-btn-secondary': '#3b82f6',
