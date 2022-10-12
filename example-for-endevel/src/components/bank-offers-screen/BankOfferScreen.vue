@@ -41,17 +41,11 @@
       </div>
     </div>
 
-    <!-- Bank Offers -->
-
-    <h1 class="flex justify-center mt-5">Search results</h1>
-
-    <!-- With insurance. -->
-    <h2 class="flex justify-center mt-5">Offers without insurance</h2>
-    <OfferItem v-for="(offer, index) in state.filteredOffers.uninsured" :key="index" :offer="offer" />
-
-    <!-- Without insurance. -->
-    <h2 class="flex justify-center mt-5">Offers with an insurance</h2>
-    <OfferItem v-for="(offer, index) in state.filteredOffers.insured" :key="index" :offer="offer" />
+    <OfferList
+      :uninsuredOffers="state.filteredOffers.uninsured"
+      :insuredOffers="state.filteredOffers.insured"
+      class="mt-5"
+    />
   </div>
 </template>
 
@@ -59,6 +53,10 @@
 // Vue
 
 import { reactive, watch } from 'vue';
+
+// external libraries
+
+import _ from 'lodash';
 
 // interfaces, types
 
@@ -83,7 +81,7 @@ import Slider from '@/components/ui/Slider.vue';
 import { DEFAULT_FIXATION, DEFAULT_LOAN_TERM, LOAN_TERM_MIN, LOAN_TERM_MAX } from './config';
 import { fixationSelectOptions } from './config';
 import { bankSelectOptionsFactory, ALL_BANKS_SELECT_VALUE } from './services/bankSelectOptionsFactory';
-import OfferItem from './OfferItem.vue';
+import OfferList from '@/components/bank-offers-screen/OfferList.vue';
 
 const initialState = {
   selectedBank: ALL_BANKS_SELECT_VALUE,
@@ -107,8 +105,11 @@ const bankSelectOptions: ISelectOption2[] = bankSelectOptionsFactory();
 const { getOffersResponse: offers } = useApiResponses();
 
 // Set initial view to show all fetched offers without applied filter.
-state.filteredOffers.uninsured = offers?.mortgageInsuredOffers ?? [];
-state.filteredOffers.insured = offers?.mortgageInsuredOffers ?? [];
+state.filteredOffers.uninsured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
+state.filteredOffers.insured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
+
+console.log(`BankOfferScreen: filter(): state:`);
+console.table(state);
 
 // Run filter when fetched offers was updated in store (when these was again fetched from a server
 //   during another async. action).
@@ -128,20 +129,27 @@ const onLoanTermChange = (value: number) => {
 
 // TODO 2022-10-11 TOKU: CONTINUE HERE - Add v-model also for Slider?.
 const filter = () => {
-  console.log(`BankOfferScreen: filter(): state: filter values:`);
+  console.log(`BankOfferScreen: filter(): state:`);
   console.table(state);
 
   console.log(`BankOfferScreen: filter(): ------------ FILTER 1 - START: Bank name ------------`);
 
-  state.filteredOffers.uninsured =
-    offers?.mortgageUninsuredOffers.filter(
-      (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
-    ) ?? [];
+  if (state.selectedBank === 'all') {
+    state.filteredOffers.uninsured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
+    state.filteredOffers.insured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
+  } else {
+    state.filteredOffers.uninsured =
+      // Filter create a new array.
+      offers?.mortgageUninsuredOffers.filter(
+        (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
+      ) ?? [];
 
-  state.filteredOffers.insured =
-    offers?.mortgageInsuredOffers.filter(
-      (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
-    ) ?? [];
+    state.filteredOffers.insured =
+      // Filter create a new array.
+      offers?.mortgageInsuredOffers.filter(
+        (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
+      ) ?? [];
+  }
 
   console.log(`BankOfferScreen: filter(): ------------ FILTER 1 - END ------------`);
 
