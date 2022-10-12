@@ -4,6 +4,13 @@
 
     <!-- Filter -->
 
+    <Filter
+      :initial-selected-bank="initialState.selectedBank"
+      :initial-selected-fixation="initialState.selectedFixation"
+      :initial-selected-loan-term="initialState.selectedLoanTerm"
+      @changeFilter="onChangeFilter"
+    />
+
     <div class="p-5 rounded-xl bg-brand-link bg-opacity-20">
       <div class="flex flex-col">
         <div class="flex justify-center text-xl font-semibold">Search parameters</div>
@@ -52,7 +59,7 @@
 <script setup lang="ts">
 // Vue
 
-import { reactive, watch } from 'vue';
+import { reactive } from 'vue';
 
 // external libraries
 
@@ -78,10 +85,12 @@ import Slider from '@/components/ui/Slider.vue';
 
 // This component
 
-import { DEFAULT_FIXATION, DEFAULT_LOAN_TERM, LOAN_TERM_MIN, LOAN_TERM_MAX } from './config';
-import { fixationSelectOptions } from './config';
+import type { IFilter } from '@/components/bank-offers-screen/model/IFilter';
+import { fixationSelectOptions, DEFAULT_FIXATION, DEFAULT_LOAN_TERM, LOAN_TERM_MIN, LOAN_TERM_MAX } from './config';
 import { bankSelectOptionsFactory, ALL_BANKS_SELECT_VALUE } from './services/bankSelectOptionsFactory';
-import OfferList from '@/components/bank-offers-screen/OfferList.vue';
+import { interestRateComparator } from './services/interestRateComparator';
+import Filter from './Filter.vue';
+import OfferList from './OfferList.vue';
 
 const initialState = {
   selectedBank: ALL_BANKS_SELECT_VALUE,
@@ -108,15 +117,8 @@ const { getOffersResponse: offers } = useApiResponses();
 state.filteredOffers.uninsured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
 state.filteredOffers.insured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
 
-console.log(`BankOfferScreen: filter(): state:`);
+console.log(`BankOfferScreen: actual state:`);
 console.table(state);
-
-// Run filter when fetched offers was updated in store (when these was again fetched from a server
-//   during another async. action).
-watch(offers, () => {
-  console.log('BankOfferScree: watch: store changed: getOffersResponse');
-  filter();
-});
 
 // =====================================================================================================================
 // Functions, Callbacks
@@ -124,55 +126,55 @@ watch(offers, () => {
 
 const onLoanTermChange = (value: number) => {
   state.selectedLoanTerm = value;
-  filter();
+  filter({
+    selectedBank: state.selectedBank,
+    selectedFixation: state.selectedFixation,
+    selectedLoanTerm: state.selectedLoanTerm,
+  });
 };
 
-// TODO 2022-10-11 TOKU: CONTINUE HERE - Add v-model also for Slider?.
-const filter = () => {
-  console.log(`BankOfferScreen: filter(): state:`);
-  console.table(state);
+const onChangeFilter = (value: IFilter) => {
+  console.log('BankOfferScreen: onChangeFilter:');
+  console.log(value);
+  console.log('---');
+  filter(value);
+};
 
+const filter = (filterModel: IFilter) => {
   console.log(`BankOfferScreen: filter(): ------------ FILTER 1 - START: Bank name ------------`);
 
-  if (state.selectedBank === 'all') {
+  const selectedFilterBank = filterModel.selectedBank;
+
+  if (selectedFilterBank === ALL_BANKS_SELECT_VALUE) {
     state.filteredOffers.uninsured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
     state.filteredOffers.insured = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
   } else {
     state.filteredOffers.uninsured =
       // Filter create a new array.
       offers?.mortgageUninsuredOffers.filter(
-        (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
+        (offer) => offer.bankName === getLoanProvider(ELoanProviders[selectedFilterBank]),
       ) ?? [];
 
     state.filteredOffers.insured =
       // Filter create a new array.
       offers?.mortgageInsuredOffers.filter(
-        (offer) => offer.bankName === getLoanProvider(ELoanProviders[state.selectedBank]),
+        (offer) => offer.bankName === getLoanProvider(ELoanProviders[selectedFilterBank]),
       ) ?? [];
   }
 
+  console.log('BankOfferScreen: filter(): state.filteredOffers.uninsured');
+  console.log(state.filteredOffers.uninsured);
+  console.log('BankOfferScreen: filter(): state.filteredOffers.insured');
+  console.log(state.filteredOffers.insured);
   console.log(`BankOfferScreen: filter(): ------------ FILTER 1 - END ------------`);
 
   console.log(`BankOfferScreen: filter(): ------------ FILTER 2 - START: Sort ascending by interest rate ------------`);
 
-  state.filteredOffers.uninsured.sort((offer1, offer2) => {
-    return offer1.interestRate <= offer2.interestRate ? -1 : 1;
-  });
-
-  state.filteredOffers.insured.sort((offer1, offer2) => {
-    return offer1.interestRate <= offer2.interestRate ? -1 : 1;
-  });
+  state.filteredOffers.uninsured.sort(interestRateComparator);
+  state.filteredOffers.insured.sort(interestRateComparator);
 
   console.log(`BankOfferScreen: filter(): ------------ FILTER 2 - END  ------------`);
 };
 </script>
 
-<style lang="scss" scoped>
-h1 {
-  @apply text-xl font-semibold;
-}
-
-h2 {
-  @apply text-lg font-semibold;
-}
-</style>
+<style lang="scss" scoped></style>
