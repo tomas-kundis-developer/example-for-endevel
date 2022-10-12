@@ -9,9 +9,9 @@
         <div class="font-semibold text-gray">Oficiální úroková sazba</div>
         <div class="font-bold">{{ props.offer.interestRate }} % ročně</div>
       </div>
-      <div class="flex fle-row justify-between">
+      <div class="flex flex-row justify-between">
         <div class="text-gray">Měsíční splátka od</div>
-        <div>{{ props.offer.monthlyPayment }} Kč</div>
+        <div>{{ monthlyPaymentFormatted }}</div>
       </div>
       <div class="flex fle-row justify-between">
         <div class="text-gray">RPSN</div>
@@ -22,11 +22,18 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 import type { IOfferResponse } from '@/@types/integration/be-api/IGetOffersResponse';
+import { currencyFormat } from '@/utils/currencyFormat';
 
 const props = defineProps<{
   offer: IOfferResponse;
 }>();
+
+const monthlyPaymentFormatted = computed(() => {
+  return currencyFormat(props.offer.monthlyPayment, false);
+});
 </script>
 
 <style lang="scss" scoped></style>
