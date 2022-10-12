@@ -26,3 +26,23 @@ export const getOffersService = (): IGetOffersResponse => {
       return mock_randGenError;
   }
 };
+
+export const getOffersServiceAsync = (): Promise<IGetOffersResponse> =>
+  new Promise((resolve, reject) => {
+    const generatedTimeoutMs = randomGen(2.5, 4) * 1000;
+
+    console.log('getOffersServiceAsync(): Waiting for server to reply (mocked data) ...');
+    setTimeout(() => {
+      console.log(`getOffersServiceAsync(): DONE after ${generatedTimeoutMs} ms`);
+      switch (randomGen(1, 2)) {
+        case 1:
+          resolve(mock_response1);
+          break;
+        case 2:
+          resolve(mock_response2);
+          break;
+        default:
+          reject(mock_randGenError);
+      }
+    }, generatedTimeoutMs);
+  });
