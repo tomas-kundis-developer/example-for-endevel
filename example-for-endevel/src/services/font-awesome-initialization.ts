@@ -2,7 +2,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // Import specific icons.
-import { faArrowLeft, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faHouse, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faVuejs } from '@fortawesome/free-brands-svg-icons';
 
 /**
@@ -10,7 +10,7 @@ import { faVuejs } from '@fortawesome/free-brands-svg-icons';
  *
  * If you need use some fa icon, add its imports here.
  */
-const faIconsImports = [faArrowLeft, faHouse, faVuejs];
+const faIconsImports = [faArrowLeft, faHouse, faMinus, faPlus, faVuejs];
 
 /**
  * Initialize font awesome for use in Vue.js app.
