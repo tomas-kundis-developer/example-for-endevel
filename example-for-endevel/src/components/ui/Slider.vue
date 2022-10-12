@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="flex items-center gap-4 select-none">
-      <!-- TODO 2022-10-04 TOKU: Replace +/- with Font Awesome  -->
-      <div><button @click="onMinus" class="slider-button">-</button></div>
+      <div>
+        <button @click="onMinus" class="slider-button"><font-awesome-icon icon="fa-solid fa-minus" /></button>
+      </div>
       <div class="w-full">
         <VueSlider
           v-model="formValue"
@@ -16,8 +17,9 @@
           @change="onVueSliderChange"
         />
       </div>
-      <!-- TODO 2022-10-04 TOKU: Replace +/- with Font Awesome  -->
-      <div><button @click="onPlus" class="slider-button">+</button></div>
+      <div>
+        <button @click="onPlus" class="slider-button"><font-awesome-icon icon="fa-solid fa-plus" /></button>
+      </div>
     </div>
   </div>
 </template>
@@ -84,8 +86,8 @@ const onVueSliderChange = (value: number) => {
 
 <style lang="scss" scoped>
 .slider-button {
-  @apply m-0 px-2 py-0.5 rounded-md
-  text-xl hover:text-base text-slider-btn-secondary hover:text-slider-btn-primary
+  @apply m-0 px-2.5 py-1 border-0 rounded-md
+  hover:text-base text-slider-btn-secondary hover:text-slider-btn-primary
   font-bold
   hover:bg-slider-btn-secondary;
 }
