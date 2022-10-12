@@ -53,7 +53,6 @@
 
 <script setup lang="ts">
 // Vue
-
 import { useRouter } from 'vue-router';
 
 // config
@@ -63,7 +62,7 @@ import { envConfig } from '@/config/envConfig';
 // services, utils
 
 import { store } from '@/store/store';
-import { getOffersService } from '@/services/rest/get-offers/getOffersService';
+import { getOffersServiceAsync } from '@/services/rest/get-offers/getOffersService';
 
 const router = useRouter();
 
@@ -72,10 +71,9 @@ const GIT_HUB_URL_DEV = `${envConfig.githubUrl}/tree/dev`;
 const GIT_HUB_URL_DEV_BANK_OFFERS_SCREEN = `${envConfig.githubUrl}/tree/dev/example-for-endevel/src/components/bank-offers-screen`;
 const GIT_HUB_URL_DEV_WELCOME_SCREEN = `${envConfig.githubUrl}/blob/dev/example-for-endevel/src/components/welcome-screen/WelcomeScreen.vue`;
 
-const onBankOffers = () => {
-  // TODO 2022-10-11 TOKU: Make async call getOffersService() for better demonstration of JS skills.
-  store.apiResponses.getOffersResponse = getOffersService();
-  router.push({ name: 'bank-offers-view' });
+const onBankOffers = async () => {
+  store.apiResponses.getOffersResponse = await getOffersServiceAsync();
+  await router.push({ name: 'bank-offers-view' });
 };
 </script>
 
