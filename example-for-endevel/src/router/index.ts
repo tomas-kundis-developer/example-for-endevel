@@ -25,8 +25,13 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
-  // TODO 2022-10-09 TOKU: Add router's beforeEach global guard.
+router.beforeEach((to, from, next) => {
+  // Allow access to bank-offers-view only from welcome-view, else return to welcome-view.
+  if (to.name === 'bank-offers-view' && from.name !== 'welcome-view') {
+    return next({ name: 'welcome-view' });
+  }
+
+  return next();
 });
 
 export default router;
