@@ -84,6 +84,9 @@ const onVueSliderChange = (value: number) => {
 
 <style lang="scss" scoped>
 .slider-button {
-  @apply m-0 px-2 py-0.5 rounded-md text-slider-btn-primary bg-slider-btn-secondary hover:bg-opacity-60;
+  @apply m-0 px-2 py-0.5 rounded-md
+  text-xl hover:text-base text-slider-btn-secondary hover:text-slider-btn-primary
+  font-bold
+  hover:bg-slider-btn-secondary;
 }
 </style>
