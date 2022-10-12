@@ -1,6 +1,6 @@
 {
   "name": "example-for-endevel",
-  "version": "0.0.5-20221012-0436",
+  "version": "0.0.5-SNAPSHOT",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
