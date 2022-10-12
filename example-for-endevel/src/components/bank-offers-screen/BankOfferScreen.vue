@@ -56,11 +56,8 @@ const state = reactive({
 const { getOffersResponse: offers } = useApiResponses();
 
 // Set initial view to show all fetched offers without applied filter.
-state.filteredUninsuredOffers = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
-state.filteredInsuredOffers = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
-
-state.filteredUninsuredOffers.sort(interestRateComparator);
-state.filteredInsuredOffers.sort(interestRateComparator);
+state.filteredUninsuredOffers = _.cloneDeep(offers?.mortgageInsuredOffers ?? []).sort(interestRateComparator);
+state.filteredInsuredOffers = _.cloneDeep(offers?.mortgageInsuredOffers ?? []).sort(interestRateComparator);
 
 // =====================================================================================================================
 // Functions, Callbacks
@@ -72,14 +69,10 @@ const onChangeFilter = (filterModel: IFilter) => {
   filter(filterModel);
 };
 
-const filter = (filterModel: IFilter) => {
-  console.log(`BankOfferScreen: filter(): ---------------- START ----------------`);
+const filterStage1 = (selectedBank: string) => {
+  console.log(`BankOfferScreen: filterStage1(): STAGE 1: selectedBank: ${selectedBank}`);
 
-  // Stage 1
-  // ===================================================================================================================
-  console.log(`BankOfferScreen: filter(): STAGE 1: filterModel.selectedBank: ${filterModel.selectedBank}`);
-
-  const selectedFilterBank = filterModel.selectedBank;
+  const selectedFilterBank = selectedBank;
 
   if (selectedFilterBank === ALL_BANKS_SELECT_VALUE) {
     state.filteredUninsuredOffers = _.cloneDeep(offers?.mortgageInsuredOffers ?? []);
@@ -98,15 +91,14 @@ const filter = (filterModel: IFilter) => {
       ) ?? [];
   }
 
-  console.log('BankOfferScreen: filter(): STAGE 1: filtered state.filteredOffers.uninsured');
+  console.log('BankOfferScreen: filterStage1(): STAGE 1: filtered state.filteredOffers.uninsured');
   console.log(state.filteredUninsuredOffers);
-  console.log('BankOfferScreen: filter(): STAGE 1: filtered state.filteredOffers.insured');
+  console.log('BankOfferScreen: filterStage1(): STAGE 1: filtered state.filteredOffers.insured');
   console.log(state.filteredInsuredOffers);
-  console.log('BankOfferScreen: filter(): STAGE 1: ... DONE.');
+  console.log('BankOfferScreen: filterStage1(): STAGE 1: ... DONE.');
+};
 
-  // Stage 2
-  // ===================================================================================================================
-
+const filterStage2 = () => {
   console.log(`BankOfferScreen: filter(): STAGE 2: sorted ascending by interest rate:`);
 
   state.filteredUninsuredOffers.sort(interestRateComparator);
@@ -117,6 +109,14 @@ const filter = (filterModel: IFilter) => {
   console.log('BankOfferScreen: filter(): STAGE 2: sorted state.filteredOffers.insured');
   console.log(state.filteredInsuredOffers);
   console.log('BankOfferScreen: filter(): STAGE 2: ... DONE.');
+};
+
+const filter = (filterModel: IFilter) => {
+  console.log(`BankOfferScreen: filter(): ---------------- START ----------------`);
+
+  filterStage1(filterModel.selectedBank);
+  filterStage2();
+
   console.log(`BankOfferScreen: filter(): ------------ COMPLETE DONE ------------`);
 };
 </script>

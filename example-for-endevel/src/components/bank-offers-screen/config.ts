@@ -1,5 +1,5 @@
 // Fixation configuration.
-import type { ISelectOption2 } from "@/components/ui/select2/ISelectOption2";
+import type { ISelectOption2 } from '@/components/ui/select2/ISelectOption2';
 
 export const DEFAULT_FIXATION = '3';
 
