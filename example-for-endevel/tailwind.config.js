@@ -1,9 +1,12 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     colors: {
+      ...colors,
       brand: {
         'component-bg': '#ffffff',
         'layout-bg': '#eaeef2',
@@ -23,7 +26,6 @@ module.exports = {
         DEFAULT: '#828282',
         light: '#f7f7f7',
       },
-      white: '#ffffff',
     },
     container: {
       // center container class by default
