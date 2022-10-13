@@ -9,6 +9,8 @@
       @changeFilter="onChangeFilter"
     />
 
+    <CommunicationError v-if="state.showOffersFetchError" class="mt-5" />
+
     <OfferList
       :uninsuredOffers="state.filteredUninsuredOffers"
       :insuredOffers="state.filteredInsuredOffers"
@@ -20,7 +22,7 @@
 <script setup lang="ts">
 // Vue
 
-import { reactive } from 'vue';
+import { inject, reactive } from 'vue';
 
 // external libraries
 
@@ -33,10 +35,16 @@ import type { IOfferResponse } from '@/@types/integration/be-api/IGetOffersRespo
 // services, utils
 
 import { ELoanProviders, getLoanProvider } from '@/domain-model/loanProviders';
+import { getOffersServiceAsync } from '@/services/rest/get-offers/getOffersService';
+import { store } from '@/store/store';
 
 // Composables
 
 import { useApiResponses } from '@/store/composables/useApiResponses';
+
+// UI components
+
+import CommunicationError from '@/components/CommunicationError.vue';
 
 // This component
 
@@ -47,9 +55,12 @@ import { interestRateComparator } from './services/interestRateComparator';
 import Filter from './Filter.vue';
 import OfferList from './OfferList.vue';
 
+const $loading = inject('$loading');
+
 const state = reactive({
   filteredUninsuredOffers: [] as IOfferResponse[],
   filteredInsuredOffers: [] as IOfferResponse[],
+  showOffersFetchError: false,
 });
 
 // Fetched offers from financial service - original REST response, complete, unfiltered list.
@@ -63,10 +74,24 @@ state.filteredInsuredOffers = _.cloneDeep(offers?.mortgageInsuredOffers ?? []).s
 // Functions, Callbacks
 // =====================================================================================================================
 
-const onChangeFilter = (filterModel: IFilter) => {
+const onChangeFilter = async (filterModel: IFilter) => {
   console.log('BankOfferScreen: onChangeFilter:');
   console.log(filterModel);
+
+  state.showOffersFetchError = false;
+  const loader = $loading.show();
+
+  try {
+    store.apiResponses.getOffersResponse = await getOffersServiceAsync();
+  } catch (e) {
+    console.error('BankOfferScreen: onChangeFilter(): getOffersServiceAsync() RETURNS WITH AN ERROR!');
+    state.showOffersFetchError = true;
+    loader.hide();
+    return;
+  }
+
   filter(filterModel);
+  loader.hide();
 };
 
 const filterStage1 = (selectedBank: string) => {
