@@ -3,8 +3,8 @@ import type { IGetOffersResponse } from '@/@types/integration/be-api/IGetOffersR
 export const mock_serverError: IGetOffersResponse = {
   mortgageInsuredOffers: [],
   mortgageUninsuredOffers: [],
-  errorMessageInsuredOffers: 'getOffersService computation error',
-  errorMessageUninsuredOffers: 'getOffersService computation error',
+  errorMessageInsuredOffers: 'error #4432: getOffersService computation error',
+  errorMessageUninsuredOffers: 'error #4432: getOffersService computation error',
 };
 
 export const mock_randGenError: IGetOffersResponse = {
