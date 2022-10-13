@@ -9,10 +9,7 @@
 
     <!-- Bank Offers -->
 
-    <div v-if="showError" class="mt-5 text-center font-semibold text-[#ff0000]">
-      <div>ERROR DURING COMMUNICATION WITH THE SERVER!</div>
-      <div class="mt-2">Please, try again.</div>
-    </div>
+    <CommunicationError v-if="showError" class="mt-5" />
 
     <div class="mt-5 flex justify-center w-min-1/2">
       <button
@@ -80,6 +77,10 @@ import { envConfig } from '@/config/envConfig';
 
 import { store } from '@/store/store';
 import { getOffersServiceAsync } from '@/services/rest/get-offers/getOffersService';
+
+// UI components
+
+import CommunicationError from '@/components/CommunicationError.vue';
 
 const router = useRouter();
 
