@@ -9,6 +9,11 @@
 
     <!-- Bank Offers -->
 
+    <div v-if="showError" class="mt-5 text-center font-semibold text-[#ff0000]">
+      <div>ERROR DURING COMMUNICATION WITH THE SERVER!</div>
+      <div class="mt-2">Please, try again.</div>
+    </div>
+
     <div class="mt-5 flex justify-center w-min-1/2">
       <button
         type="button"
@@ -19,7 +24,7 @@
       </button>
     </div>
 
-    <div class="flex flex-col mt-5 text-sm text-center italic text-brand-green-light">
+    <div class="mt-5 text-sm text-center italic text-brand-green-light">
       This is just simple example application as my reference.<br />
       Its purpose is to present my skill in architecting and developing SPA web application's using the Vue.js
       framework.
@@ -60,8 +65,12 @@
 
 <script setup lang="ts">
 // Vue
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import { useRouter } from 'vue-router';
+
+// interfaces, types
+
+import type { IGetOffersResponse } from '@/@types/integration/be-api/IGetOffersResponse';
 
 // config
 
@@ -76,15 +85,33 @@ const router = useRouter();
 
 const $loading = inject('$loading');
 
+const showError = ref(false);
+
 const GIT_HUB_URL_MASTER = envConfig.githubUrl;
 const GIT_HUB_URL_DEV = `${envConfig.githubUrl}/tree/dev`;
 const GIT_HUB_URL_DEV_BANK_OFFERS_SCREEN = `${envConfig.githubUrl}/tree/dev/example-for-endevel/src/components/bank-offers-screen`;
 const GIT_HUB_URL_DEV_WELCOME_SCREEN = `${envConfig.githubUrl}/blob/dev/example-for-endevel/src/components/welcome-screen/WelcomeScreen.vue`;
 
 const onBankOffers = async () => {
+  showError.value = false;
   const loader = $loading.show();
-  store.apiResponses.getOffersResponse = await getOffersServiceAsync();
-  loader.hide();
+
+  try {
+    store.apiResponses.getOffersResponse = await getOffersServiceAsync();
+  } catch (e) {
+    console.error('WelcomeScreen: onBankOffers(): getOffersServiceAsync() RETURNS WITH AN ERROR!');
+    console.error('WelcomeScreen: onBankOffers(): error description for uninsured offers:');
+    console.error((e as IGetOffersResponse).errorMessageUninsuredOffers);
+    console.error('WelcomeScreen: onBankOffers(): error description for insured offers:');
+    console.error((e as IGetOffersResponse).errorMessageInsuredOffers);
+    console.error('WelcomeScreen: onBankOffers(): exception:');
+    console.log(e);
+    showError.value = true;
+    return;
+  } finally {
+    loader.hide();
+  }
+
   await router.push({ name: 'bank-offers-view' });
 };
 </script>
