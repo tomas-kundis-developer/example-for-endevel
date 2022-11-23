@@ -5,6 +5,12 @@
     <div class="flex flex-col items-center pt-3">
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
       <div class="pt-2">Welcome in Vue application!</div>
+      <div class="mt-2 text-sm text-center italic text-gray text-opacity-80">
+        Originally developed for some company as part of the interviewing process.
+      </div>
+      <div class="mt-0 text-sm text-center italic text-red-500">
+        Application simulate connection errors during fetching a bank offers!
+      </div>
     </div>
 
     <!-- Bank Offers -->
