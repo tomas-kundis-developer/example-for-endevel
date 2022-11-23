@@ -9,7 +9,7 @@
         Originally developed for some company as part of the interviewing process.
       </div>
       <div class="mt-0 text-sm text-center italic text-red-500">
-        Application simulate connection errors during fetching a bank offers!
+        Application simulates connection errors during fetching a bank offers!
       </div>
     </div>
 
@@ -47,6 +47,11 @@
       <li class="text-brand-link">
         <a :href="GIT_HUB_URL_DEV" target="_blank" rel="noopener noreferrer">Project's Github - Dev branch</a>
         <ul class="ml-10 list-disc font-medium">
+          <li>
+            <a :href="GIT_HUB_URL_DEV_DOC_IDEAS_REQ" target="_blank" rel="noopener noreferrer"
+              >Ideas and Requirements (TODO)</a
+            >
+          </li>
           <li>
             <a :href="GIT_HUB_URL_DEV_WELCOME_SCREEN" target="_blank" rel="noopener noreferrer"
               >WelcomeScreen Component</a
@@ -96,8 +101,10 @@ const showError = ref(false);
 
 const GIT_HUB_URL_MASTER = envConfig.githubUrl;
 const GIT_HUB_URL_DEV = `${envConfig.githubUrl}/tree/dev`;
-const GIT_HUB_URL_DEV_BANK_OFFERS_SCREEN = `${envConfig.githubUrl}/tree/dev/example-for-endevel/src/components/bank-offers-screen`;
-const GIT_HUB_URL_DEV_WELCOME_SCREEN = `${envConfig.githubUrl}/blob/dev/example-for-endevel/src/components/welcome-screen/WelcomeScreen.vue`;
+const GIT_HUB_URL_DEV_BANK_OFFERS_SCREEN = `${GIT_HUB_URL_DEV}/example-for-endevel/src/components/bank-offers-screen`;
+const GIT_HUB_URL_DEV_WELCOME_SCREEN = `${GIT_HUB_URL_DEV}/example-for-endevel/src/components/welcome-screen/WelcomeScreen.vue`;
+const GIT_HUB_URL_DEV_DOC = `${GIT_HUB_URL_DEV}/example-for-endevel/doc`;
+const GIT_HUB_URL_DEV_DOC_IDEAS_REQ = `${GIT_HUB_URL_DEV_DOC}/ideas and requirements.md`;
 
 const onBankOffers = async () => {
   showError.value = false;
