@@ -1,3 +1,16 @@
+<!-- TOC -->
+**TOC**
+
+* [1. New Requirements](#1-new-requirements)
+* [2. Code and Architecture Improvements](#2-code-and-architecture-improvements)
+* [3. Ideas](#3-ideas)
+  * [3.1. Product](#31-product)
+  * [3.2 Technology and Architecture](#32-technology-and-architecture)
+<!-- TOC -->
+
+---
+
+
 # 1. New Requirements
 
 > Requirements are not prioritized.
